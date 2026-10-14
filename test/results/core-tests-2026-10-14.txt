@@ -1,0 +1,17 @@
+✔ URL normalization preserves image query and rejects unsafe schemes (0.5989ms)
+✔ Image host permission checks resist lookalike domains (0.1623ms)
+✔ Product page recognition excludes search and category pages (0.3775ms)
+✔ Sources cover srcset and multiple CSS backgrounds (0.5517ms)
+✔ Dedupe keeps known dimensions and removes small and unsafe images (0.3788ms)
+✔ Size, batch and filename bounds prevent oversized processing (3.1396ms)
+✔ PNG verification checks signature instead of file extension (0.1245ms)
+✔ Background session flow requires a real supported page sender (1.1408ms)
+✔ Background rejects ungranted sources and JPEG disguised as PNG (0.8145ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21.9615

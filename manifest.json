@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "图提取 ImageGrab",
+  "version": "1.0.0",
+  "description": "提取商品页图片，按需选择并下载为PNG。仅处理用户主动选择的图片。",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage"
+  ],
+  "optional_host_permissions": [
+    "https://*.alicdn.com/*",
+    "https://*.taobao.com/*",
+    "https://*.tmall.com/*",
+    "https://*.jd.com/*",
+    "https://*.360buyimg.com/*",
+    "https://*.pddpic.com/*",
+    "https://*.pinduoduo.com/*",
+    "https://*.yangkeduo.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "图提取 ImageGrab",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.taobao.com/*",
+        "https://*.tmall.com/*",
+        "https://*.jd.com/*",
+        "https://*.pinduoduo.com/*",
+        "https://*.yangkeduo.com/*"
+      ],
+      "js": [
+        "shared/core.js",
+        "shared/extract.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
