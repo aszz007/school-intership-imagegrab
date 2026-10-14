@@ -10,5 +10,15 @@
 <h1>官网320px同源子视口验收</h1>
 <p>此页面用于检查真实页面在320px宽度下的布局和交互，不是手机设备截图，也不是Chrome扩展运行截图。</p>
 <iframe id="phone" title="320px官网预览" src="../index.html" width="320" height="844"></iframe>
+<script>
+const widths = [320, 375, 768];
+const value = Number(new URLSearchParams(location.search).get("width"));
+const width = widths.includes(value) ? value : 320;
+const frame = document.getElementById("phone");
+frame.style.width = width + "px";
+frame.width = width;
+frame.title = width + "px官网预览";
+document.querySelector("h1").textContent = "官网" + width + "px同源子视口验收";
+</script>
 </body>
 </html>
