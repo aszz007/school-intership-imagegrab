@@ -32,12 +32,15 @@ document.getElementById('copy-url').addEventListener('click', async () => {
   }
 });
 if ('IntersectionObserver' in window) {
+  const inView = new Map();
   const observer = new IntersectionObserver(entries => {
-    const visible = entries.filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (!visible) return;
+    for (const entry of entries) {
+      if (entry.isIntersecting) inView.set(entry.target.id, entry.intersectionRatio);
+      else inView.delete(entry.target.id);
+    }
+    const activeSection = [...inView].sort((a, b) => b[1] - a[1])[0]?.[0];
     links.querySelectorAll('a[href^="#"]').forEach(link => {
-      const active = link.getAttribute('href') === '#' + visible.target.id;
+      const active = Boolean(activeSection) && link.getAttribute('href') === '#' + activeSection;
       link.classList.toggle('active', active);
       if (active) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
