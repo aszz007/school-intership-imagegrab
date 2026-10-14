@@ -32,4 +32,6 @@ activeTab和scripting用于本人点击扩展按钮后，在当前支持站点�
 
 ## 当前验证记录
 
-实现、验证和发布状态以实际测试记录为准，当前阶段见TESTING.md，9组核心测试及ZIP校验通过；浏览器布局、PNG实际下载、扩展安装和实站仍待验收。尚未将扩展安装、三平台实站或正式部署标成已通过。
+官网已发布到https://aszz007.github.io/school-intership-imagegrab/，源码仓库为https://github.com/aszz007/school-intership-imagegrab。9组核心检查、安装包校验、自有素材的生产DOM提取、窄屏菜单和网页示例PNG保存已通过。
+
+2026年10月14日，本人已在Chrome加载启用扩展，并从京东商品页打开真实扩展画廊、选择一张商品图下载。实际文件为300×300的PNG，完整解码、PNG签名和SHA-256校验通过。这个单图个案不代表所有电商页面、批量处理或异常场景都已验证。范围和仍待验证的事项见TESTING.md。
