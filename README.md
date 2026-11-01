@@ -1,37 +1,23 @@
 # 图提取 ImageGrab
 
-企业实习课程作品，Chrome Manifest V3扩展与配套静态官网。将当前商品页已经加载的图片整理为画廊，按需选择后真实转换为PNG下载。
+Chrome Manifest V3图片整理扩展，配套HTML/CSS/JavaScript官网。本地维护版1.1.2，支持按尺寸筛选、图片选择和PNG下载。
 
 ## 安装与使用
 
-1. 下载ImageGrab-v1.0.0.zip并解压，确认文件夹中有manifest.json。
-2. 在Chrome打开chrome://extensions，开启开发者模式，点击“加载已解压的扩展程序”，选择解压文件夹。
-3. 打开淘宝/天猫、京东或拼多多商品页。等图片加载后，点击右下角“获取图片”；未识别到悬浮按钮时，可点击扩展工具栏的“提取当前页图片”。
-4. 在画廊查看图片及尺寸，逐张勾选、全选或反选，再点击“下载选中·PNG”。确认所选图片源权限后，图片会转换并交给浏览器下载。
-5. 文件默认位于下载目录的ImageGrab子文件夹，采用商品图_001.png等序号。以浏览器下载记录的完成状态为准。
+解压插件ZIP，在Chrome打开chrome://extensions，启用开发者模式，点击“加载未打包的扩展程序”，选择包含manifest.json的文件夹。打开商品页，等待图片加载，再点击“获取图片”或工具栏扩展按钮。
 
-仅保存有权处理的图片。插件不读取商家后台API、不自动登录、不上传图片。提取基于页面已加载内容，特殊页面结构、登录限制、防盗链、动态加载或CDN重定向可能导致缺图或失败；错误会在画廊反馈。动态图片保存为静态帧。
+在画廊设置最小宽度、高度，点击“应用筛选”；重置恢复100px。支持逐张选择、全选、反选和取消选择。下载仅处理当前可见的选中图片，下载前按所选来源申请权限。下载记录显示完成、失败和中断，可停止后续处理。
 
-## 权限与范围
+## 图片处理
 
-activeTab和scripting用于本人点击扩展按钮后，在当前支持站点进行必要的补充注入；downloads用于本人选中图片的下载；storage保存本机画廊数据。图片源访问为optional_host_permissions，只在点击下载时请求选中域名。
+候选图来自页面图片、懒加载属性、srcset和背景图，经过地址去重。图片在本机解码后由Canvas编码为PNG；动态图片保存为静态帧。每次最多500张，每张至少100×100像素、不超过3200万像素，原图和PNG各不超过12MB；两个任务并行，网络超时15秒。画廊会话保留两小时。
 
-图片源白名单：alicdn.com、taobao.com、tmall.com、jd.com、360buyimg.com、pddpic.com、pinduoduo.com、yangkeduo.com及各自子域名，均要求HTTPS。不支持的图片域名给出明确反馈。扩展会保持用户已确认的Chrome站点权限，可在扩展设置中自行撤销。
-
-每次最多500张候选图，每张原图与转换后的PNG均不超过12MB，尺寸至少100×100，像素数量不超过3200万；两个转换任务并行，网络15秒超时。画廊数据两小时过期，不等于长期笔记或云同步。
+特殊页面结构、未加载内容、登录限制和图片源重定向可能导致缺图或读取失败，画廊会显示原因。
 
 ## 官网与开发
 
-官网在docs/index.html，使用HTML/CSS/JavaScript，无CDN、数据库或付费服务。docs/demo为可实际转换并下载自有JPG/WebP/PNG素材的演示，明确标为“示例演示·非扩展运行”，不作为电商扩展截图。docs/downloads包含可加载的插件ZIP。
+docs/index.html为官网；docs/demo使用三张自编商品图，可体验尺寸筛选和PNG转换；docs/downloads提供安装包。
 
-本地运行整个课设的tools/serve.py后，访问/imagegrab/docs/。单独查看时可在本目录运行python -m http.server 4230 --bind 127.0.0.1，再访问http://127.0.0.1:4230/docs/。可从GitHub Pages的main分支/docs发布，使用相对资源路径。
+运行node --test test/core.test.mjs test/gallery.test.mjs执行24项核心和画廊测试。测试范围及浏览器操作记录见TESTING.md；版本包校验见根目录evidence/imagegrab。
 
-文件职责：manifest.json声明范围；shared/core.js校验URL、尺寸和文件名；shared/extract.js读取DOM候选；content.js提供商品页按钮；background.js管理画廊会话、受限图片请求和下载；gallery.js负责选择、实际PNG转换及进度。
-
-核心检查：node --test test/core.test.mjs。在限制子进程的环境中可使用node --test --test-isolation=none test/core.test.mjs。test/product-fixture.html通过生产DOM提取器检查自有图片，不代表Chrome API或真实电商站点验收。
-
-## 当前验证记录
-
-官网已发布到https://aszz007.github.io/school-intership-imagegrab/，源码仓库为https://github.com/aszz007/school-intership-imagegrab。9组核心检查、安装包校验、自有素材的生产DOM提取、窄屏菜单和网页示例PNG保存已通过。
-
-2026年10月14日，本人已在Chrome加载启用扩展，并从京东商品页打开真实扩展画廊、选择一张商品图下载。实际文件为300×300的PNG，完整解码、PNG签名和SHA-256校验通过。这个单图个案不代表所有电商页面、批量处理或异常场景都已验证。范围和仍待验证的事项见TESTING.md。
+1.1.2整理工具栏、空结果和页面文案。1.1.1改进键盘重置与图片预览布局，1.1.0加入尺寸筛选。旧版按独立ZIP保留。线上GitHub Pages仍使用已发布版本，具体版本见当前交付说明。

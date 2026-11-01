@@ -1,1 +1,62 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>图片画廊 · 图提取 ImageGrab</title><link rel="stylesheet" href="gallery.css"></head><body><header class="topbar"><a class="brand" href="#"><span class="brand-icon">↗</span><span>图提取<small>IMAGEGRAB</small></span></a><span id="mode-label" class="mode-label">商品图片画廊</span></header><main><div class="heading"><div><span class="eyebrow">YOUR IMAGES, YOUR PICK.</span><h1>先挑好，再下载。</h1><p id="source-title">正在读取商品图片…</p></div><div class="summary"><strong id="total">0</strong><span>张可选图片</span></div></div><p id="notice" class="notice" role="status" aria-live="polite">正在加载…</p><section class="toolbar" aria-label="图片选择与下载"><div class="selection-actions"><button id="select-all" type="button">全选</button><button id="invert" type="button">反选</button><button id="clear" type="button">取消选择</button><span>已选 <strong id="selected">0</strong> 张</span></div><div class="download-actions"><button id="cancel" type="button" hidden>停止后续下载</button><button id="download" class="primary" type="button" disabled>下载选中 · PNG <span>↓</span></button></div></section><div id="progress" class="progress" hidden><progress id="progress-bar" value="0" max="1"></progress><p id="progress-text" role="status"></p></div><section id="gallery" class="gallery" aria-label="提取的图片"></section><div id="empty" class="empty" hidden><h2>还没有可用图片</h2><p>回到商品页，等待图片加载后重新获取。</p></div><details id="results" class="results" hidden><summary>下载处理记录</summary><ul id="result-list"></ul></details><footer><p>支持已加载的商品图与常见图片格式，动态图片保存为静态帧。小于100×100像素的图片不会下载。</p><p>图片保留在本机；下载前只请求选中图片源的权限。请保存有权使用的图片。</p></footer></main><script src="shared/core.js"></script><script src="gallery.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>图片画廊 · 图提取 ImageGrab</title>
+  <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-icon">↗</span><span>图提取<small>IMAGEGRAB</small></span></a>
+    <span id="mode-label" class="mode-label">商品图片画廊</span>
+  </header>
+  <main>
+    <div class="heading">
+      <div><h1>图片画廊</h1><p id="source-title">正在读取商品图片…</p></div>
+      <div class="summary"><strong id="total">0</strong><span>张可选图片</span></div>
+    </div>
+    <p id="notice" class="notice" role="status" aria-live="polite">正在加载…</p>
+    <form id="dimension-filter" class="dimension-filter" aria-label="按图片尺寸筛选" novalidate>
+      <div class="dimension-field">
+        <label for="filter-width">最小宽度 <span>px</span></label>
+        <input id="filter-width" type="number" min="100" max="16384" step="1" inputmode="numeric" value="100" aria-describedby="filter-help filter-error">
+      </div>
+      <div class="dimension-field">
+        <label for="filter-height">最小高度 <span>px</span></label>
+        <input id="filter-height" type="number" min="100" max="16384" step="1" inputmode="numeric" value="100" aria-describedby="filter-help filter-error">
+      </div>
+      <div class="filter-actions">
+        <button id="apply-filter" type="submit">应用筛选</button>
+        <button id="reset-filter" type="button">重置</button>
+      </div>
+      <p id="filter-summary" class="filter-summary" role="status" aria-live="polite">匹配 0 / 0 张</p>
+      <p id="filter-help" class="filter-help">尺寸至少100 × 100 px。筛选会取消不匹配图片的选择。</p>
+      <p id="filter-error" class="filter-error" role="alert"></p>
+    </form>
+    <section class="toolbar" aria-label="图片选择与下载">
+      <div class="selection-actions">
+        <button id="select-all" type="button">全选</button>
+        <button id="invert" type="button">反选</button>
+        <button id="clear" type="button">取消选择</button>
+        <span>已选 <strong id="selected">0</strong> 张</span>
+      </div>
+      <div class="download-actions">
+        <button id="cancel" type="button" hidden>停止后续下载</button>
+        <button id="download" class="primary" type="button" disabled>下载选中 · PNG</button>
+      </div>
+    </section>
+    <div id="progress" class="progress" hidden><progress id="progress-bar" value="0" max="1"></progress><p id="progress-text" role="status"></p></div>
+    <section id="gallery" class="gallery" aria-label="提取的图片"></section>
+    <div id="empty" class="empty" hidden>
+      <h2 id="empty-title">暂无可用图片</h2>
+      <p id="empty-help">回到商品页，等待图片加载后重新获取。</p>
+      <button id="reset-empty" type="button" hidden>重置筛选</button>
+    </div>
+    <details id="results" class="results" hidden><summary>下载处理记录</summary><ul id="result-list"></ul></details>
+    <footer><details><summary>图片处理与权限</summary><p>图片至少100 × 100像素；动态图片保存为静态帧。下载前只请求选中图片源的权限，图片在本机处理。</p><p>在浏览器下载记录中查看已保存的文件。</p></details></footer>
+  </main>
+  <script src="shared/core.js"></script><script src="gallery.js"></script>
+</body>
+</html>
